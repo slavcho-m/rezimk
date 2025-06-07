@@ -9,6 +9,6 @@ public interface TownService {
     Town findById(Long id);
     Town findByName(String name);
     Town save(Town town);
-    Town update(Town town);
+    Town update(Long id, Town town);
     Town deleteById(Long id);
 }

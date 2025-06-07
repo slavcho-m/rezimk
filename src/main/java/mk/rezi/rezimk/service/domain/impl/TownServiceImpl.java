@@ -43,8 +43,8 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
-    public Town update(Town town) {
-        Town old = this.findById(town.getId());
+    public Town update(Long id, Town town) {
+        Town old = this.findById(id);
 
         if (old == null) {
             throw new TownNotFoundException(town.getId());

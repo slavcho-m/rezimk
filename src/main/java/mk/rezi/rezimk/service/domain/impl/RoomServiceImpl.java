@@ -32,8 +32,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room update(Room room) {
-        Room old = this.findById(room.getId());
+    public Room update(Long id, Room room) {
+        Room old = this.findById(id);
         if (old == null) {
             throw new RoomNotFoundException(room.getId());
         }

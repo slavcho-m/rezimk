@@ -7,6 +7,6 @@ public interface RoomService {
     List<Room> findAll();
     Room findById(Long id);
     Room save(Room room);
-    Room update(Room room);
+    Room update(Long id, Room room);
     Room deleteById(Long id);
 }

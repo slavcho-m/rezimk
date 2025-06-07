@@ -8,6 +8,6 @@ public interface ReviewService {
     List<Review> findAll();
     Review findById(Long id);
     Review save(Review review);
-    Review update(Review review);
+    Review update(Long id, Review review);
     Review deleteById(Long id);
 }

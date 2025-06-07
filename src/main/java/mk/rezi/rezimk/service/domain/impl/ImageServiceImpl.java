@@ -32,8 +32,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image update(Image image) {
-        Image old = this.findById(image.getId());
+    public Image update(Long id, Image image) {
+        Image old = this.findById(id);
         if (old == null) {
             throw new ImageNotFoundException(image.getId());
         }

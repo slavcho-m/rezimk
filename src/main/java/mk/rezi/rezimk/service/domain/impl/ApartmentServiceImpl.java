@@ -32,8 +32,8 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public Apartment update(Apartment apartment) {
-        Apartment old = this.findById(apartment.getId());
+    public Apartment update(Long id, Apartment apartment) {
+        Apartment old = this.findById(id);
 
         if (old != null) {
             old.setName(apartment.getName());

@@ -32,8 +32,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review update(Review review) {
-        Review oldReview = this.findById(review.getId());
+    public Review update(Long id, Review review) {
+        Review oldReview = this.findById(id);
         if (oldReview == null) {
             throw new ReviewNotFoundException(review.getId());
         }
