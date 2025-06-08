@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:17.4
+    image: postgres:latest
     restart: always
     environment:
       POSTGRES_USER: emt
@@ -11,7 +11,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./views.sql:/docker-entrypoint-initdb.d/views.sql
     ports:
-      - 2345:5432
+      - "2345:5432"
 volumes:
   pgdata:
 

@@ -22,7 +22,7 @@ public class TownController {
         return townService.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<Town> findByName(@RequestParam String name) {
         return ResponseEntity.ok(townService.findByName(name));
     }
