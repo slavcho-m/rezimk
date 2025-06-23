@@ -1,6 +1,7 @@
 package mk.rezi.rezimk.web.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mk.rezi.rezimk.dto.ReviewDto;
 import mk.rezi.rezimk.model.Review;
 import mk.rezi.rezimk.service.domain.ReviewService;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class ReviewController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Review> add(@RequestBody Review review) {
-        return ResponseEntity.ok(reviewService.save(review));
+    public ResponseEntity<Review> add(@RequestBody ReviewDto reviewDto) {
+        return ResponseEntity.ok(reviewService.save(reviewDto));
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Review> edit(@PathVariable Long id, @RequestBody Review review) {
-        return ResponseEntity.ok(reviewService.update(id, review));
+    public ResponseEntity<Review> edit(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
+        return ResponseEntity.ok(reviewService.update(id, reviewDto));
     }
 
     @DeleteMapping("/delete/{id}")

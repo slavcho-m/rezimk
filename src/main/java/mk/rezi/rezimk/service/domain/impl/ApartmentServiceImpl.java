@@ -1,9 +1,12 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import mk.rezi.rezimk.dto.ApartmentDto;
 import mk.rezi.rezimk.model.Apartment;
+import mk.rezi.rezimk.model.Town;
 import mk.rezi.rezimk.model.exception.ApartmentNotFoundException;
 import mk.rezi.rezimk.repository.ApartmentRepository;
 import mk.rezi.rezimk.service.domain.ApartmentService;
+import mk.rezi.rezimk.service.domain.TownService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +14,11 @@ import java.util.List;
 @Service
 public class ApartmentServiceImpl implements ApartmentService {
     private final ApartmentRepository apartmentRepository;
+    private final TownService townService;
 
-    public ApartmentServiceImpl(ApartmentRepository apartmentRepository) {
+    public ApartmentServiceImpl(ApartmentRepository apartmentRepository, TownService townService) {
         this.apartmentRepository = apartmentRepository;
+        this.townService = townService;
     }
 
     @Override
@@ -27,33 +32,24 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
-    public Apartment save(Apartment apartment) {
-        return this.apartmentRepository.save(apartment);
+    public Apartment save(ApartmentDto apartmentDto) {
+        Town town = townService.findById(apartmentDto.townId());
+        return this.apartmentRepository.save(new Apartment(apartmentDto.name(), apartmentDto.address(), apartmentDto.description(), town));
     }
 
     @Override
-    public Apartment update(Long id, Apartment apartment) {
+    public Apartment update(Long id, ApartmentDto apartmentDto) {
         Apartment old = this.findById(id);
+        Town town = townService.findById(apartmentDto.townId());
 
         if (old != null) {
-            old.setName(apartment.getName());
-            old.setAddress(apartment.getAddress());
-            old.setDescription(apartment.getDescription());
-            old.setTown(apartment.getTown());
+            old.setName(apartmentDto.name());
+            old.setAddress(apartmentDto.address());
+            old.setDescription(apartmentDto.description());
+            old.setTown(town);
 
-            if (!apartment.getRooms().isEmpty()) {
-                old.setRooms(apartment.getRooms());
-            }
-
-            if (!apartment.getReviews().isEmpty()) {
-                old.setReviews(apartment.getReviews());
-            }
-
-            if (!apartment.getImages().isEmpty()) {
-                old.setImages(apartment.getImages());
-            }
         } else {
-            throw new ApartmentNotFoundException(apartment.getId());
+            throw new ApartmentNotFoundException(id);
         }
 
         return this.apartmentRepository.save(old);

@@ -1,6 +1,7 @@
 package mk.rezi.rezimk.web.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mk.rezi.rezimk.dto.RoomDto;
 import mk.rezi.rezimk.model.Room;
 import mk.rezi.rezimk.service.domain.RoomService;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,19 @@ public class RoomController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Room> create(@RequestBody Room room) {
-        return ResponseEntity.ok(roomService.save(room));
+    public ResponseEntity<Room> create(@RequestBody RoomDto roomDto) {
+        return ResponseEntity.ok(roomService.save(roomDto));
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Room> update(@PathVariable Long id, @RequestBody Room room) {
-        return ResponseEntity.ok(roomService.update(id, room));
+    public ResponseEntity<Room> update(@PathVariable Long id, @RequestBody RoomDto roomDto) {
+        return ResponseEntity.ok(roomService.update(id, roomDto));
+    }
+
+    @PutMapping("/edit/{id}/amenities")
+    public ResponseEntity<Void> addAmenities(@PathVariable Long id, @RequestBody List<Long> amenityIds) {
+        roomService.addAmenities(id, amenityIds);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{id}")

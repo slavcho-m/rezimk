@@ -1,6 +1,7 @@
 package mk.rezi.rezimk.web.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mk.rezi.rezimk.dto.TownDto;
 import mk.rezi.rezimk.model.Town;
 import mk.rezi.rezimk.service.domain.TownService;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class TownController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Town> create(@RequestBody Town town) {
-        return ResponseEntity.ok(townService.save(town));
+    public ResponseEntity<Town> create(@RequestBody TownDto townDto) {
+        return ResponseEntity.ok(townService.save(townDto));
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Town> update(@PathVariable Long id, @RequestBody Town town) {
-        return ResponseEntity.ok(townService.update(id, town));
+    public ResponseEntity<Town> update(@PathVariable Long id, @RequestBody TownDto townDto) {
+        return ResponseEntity.ok(townService.update(id, townDto));
     }
 
     @DeleteMapping("/delete/{id}")

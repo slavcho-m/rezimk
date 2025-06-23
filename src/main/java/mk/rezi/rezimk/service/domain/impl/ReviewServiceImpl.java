@@ -1,8 +1,11 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import mk.rezi.rezimk.dto.ReviewDto;
+import mk.rezi.rezimk.model.Apartment;
 import mk.rezi.rezimk.model.Review;
 import mk.rezi.rezimk.model.exception.ReviewNotFoundException;
 import mk.rezi.rezimk.repository.ReviewRepository;
+import mk.rezi.rezimk.service.domain.ApartmentService;
 import mk.rezi.rezimk.service.domain.ReviewService;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +14,11 @@ import java.util.List;
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
+    private final ApartmentService apartmentService;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ApartmentService apartmentService) {
         this.reviewRepository = reviewRepository;
+        this.apartmentService = apartmentService;
     }
 
     @Override
@@ -27,20 +32,23 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review save(Review review) {
-        return reviewRepository.save(review);
+    public Review save(ReviewDto reviewDto) {
+        Apartment apartment = this.apartmentService.findById(reviewDto.apartmentId());
+        return reviewRepository.save(new Review(reviewDto.rating(), reviewDto.comment(), apartment));
     }
 
     @Override
-    public Review update(Long id, Review review) {
+    public Review update(Long id, ReviewDto reviewDto) {
         Review oldReview = this.findById(id);
+        Apartment apartment = this.apartmentService.findById(reviewDto.apartmentId());
+
         if (oldReview == null) {
-            throw new ReviewNotFoundException(review.getId());
+            throw new ReviewNotFoundException(id);
         }
 
-        oldReview.setComment(review.getComment());
-        oldReview.setRating(review.getRating());
-        oldReview.setApartment(review.getApartment());
+        oldReview.setComment(reviewDto.comment());
+        oldReview.setRating(reviewDto.rating());
+        oldReview.setApartment(apartment);
 
         return reviewRepository.save(oldReview);
     }

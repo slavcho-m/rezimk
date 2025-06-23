@@ -1,5 +1,6 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import mk.rezi.rezimk.dto.TownDto;
 import mk.rezi.rezimk.model.Town;
 import mk.rezi.rezimk.model.exception.TownNotFoundException;
 import mk.rezi.rezimk.model.exception.TownWithNameNotFoundException;
@@ -38,23 +39,19 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
-    public Town save(Town town) {
-        return townRepository.save(town);
+    public Town save(TownDto townDto) {
+        return townRepository.save(new Town(townDto.name()));
     }
 
     @Override
-    public Town update(Long id, Town town) {
+    public Town update(Long id, TownDto townDto) {
         Town old = this.findById(id);
 
         if (old == null) {
-            throw new TownNotFoundException(town.getId());
+            throw new TownNotFoundException(id);
         }
 
-        old.setName(town.getName());
-
-        if (!town.getApartments().isEmpty()) {
-            old.setApartments(town.getApartments());
-        }
+        old.setName(townDto.name());
 
         return townRepository.save(old);
     }

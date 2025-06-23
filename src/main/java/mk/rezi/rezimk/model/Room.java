@@ -2,12 +2,12 @@ package mk.rezi.rezimk.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import mk.rezi.rezimk.model.enums.AmenityType;
 import mk.rezi.rezimk.model.enums.RoomType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,23 +26,20 @@ public class Room {
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
 
-    @ElementCollection(targetClass = AmenityType.class)
-    @CollectionTable(name = "room_amenities", joinColumns = @JoinColumn(name = "room_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "amenity")
-    private List<AmenityType> amenities;
+    @OneToMany
+    private List<Amenity> amenities;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
     public Room() {}
 
-    public Room(RoomType roomType, int capacity, BigDecimal pricePerNight, Apartment apartment, List<AmenityType> amenities) {
+    public Room(RoomType roomType, int capacity, BigDecimal pricePerNight, Apartment apartment) {
         this.roomType = roomType;
         this.capacity = capacity;
         this.pricePerNight = pricePerNight;
         this.apartment = apartment;
-        this.amenities = amenities;
+        this.amenities = new ArrayList<>();
     }
 
     public void addImage(Image image) {
@@ -55,6 +52,14 @@ public class Room {
 
     public void removeImage(Image image) {
         this.images.remove(image);
+    }
+
+    public void addAmenities(List<Amenity> amenities) {
+        this.amenities.addAll(amenities);
+    }
+
+    public void removeAmenity(Amenity amenity) {
+        this.amenities.remove(amenity);
     }
 
     // Getters and setters
@@ -99,11 +104,11 @@ public class Room {
         this.apartment = apartment;
     }
 
-    public List<AmenityType> getAmenities() {
+    public List<Amenity> getAmenities() {
         return amenities;
     }
 
-    public void setAmenities(List<AmenityType> amenities) {
+    public void setAmenities(List<Amenity> amenities) {
         this.amenities = amenities;
     }
 
