@@ -1,0 +1,16 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-advanced-searchbar',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './advanced-searchbar.component.html',
+  styleUrl: './advanced-searchbar.component.css'
+})
+export class AdvancedSearchbarComponent {
+  inputValue = '';
+  onInputChange() {
+    console.log(this.inputValue);
+  }
+}

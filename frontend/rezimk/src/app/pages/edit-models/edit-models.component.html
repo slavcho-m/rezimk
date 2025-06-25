@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="card">
+        <app-model-card 
+            [modelType]="modelTypeEnum.TOWN"
+            (click)="onCardClick(modelTypeEnum.TOWN)"
+        />
+    </div>
+
+    <div class="card">
+        <app-model-card 
+            [modelType]="modelTypeEnum.APARTMENT"
+            (click)="onCardClick(modelTypeEnum.APARTMENT)"
+        />
+    </div>
+
+    <div class="card">
+        <app-model-card 
+            [modelType]="modelTypeEnum.ROOM"
+            (click)="onCardClick(modelTypeEnum.ROOM)"
+        />
+    </div>
+
+    <div class="card">
+        <app-model-card 
+            [modelType]="modelTypeEnum.AMENITY"
+            (click)="onCardClick(modelTypeEnum.AMENITY)"
+        />
+    </div>
+
+    <div class="card">
+        <app-model-card 
+            [modelType]="modelTypeEnum.REVIEW"
+            (click)="onCardClick(modelTypeEnum.REVIEW)"
+        />
+    </div>
+</div>
+

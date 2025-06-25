@@ -1,0 +1,44 @@
+.container {
+    width: 100%;
+    height: 64px;
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 64px;
+}
+
+.logo-container > p {
+    font-size: 24px;
+    color: darkgreen;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-family: sans-serif;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-items > a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: darkgreen;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nav-items > .outlined-btn {
+    border: 1px solid darkgreen;
+    border-radius: 4px;
+
+    transition: all ease-in-out 125ms;
+}
+
+.nav-items > .outlined-btn:hover {
+    background-color: darkgreen;
+    color: lightblue;
+}
