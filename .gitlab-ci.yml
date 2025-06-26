@@ -37,10 +37,6 @@ test_integration:
     - docker-compose up -d
     - sleep 30
     - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://backend:8080/api/apartments
-<<<<<<< HEAD
-=======
-    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://frontend:80/
->>>>>>> 6e2eb9900dd2c75afc6d11497818adb3783a3af1
     - docker-compose down
 
 deploy_prod:
