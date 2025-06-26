@@ -34,19 +34,10 @@ build_frontend:
 test_integration:
   stage: test
   script:
-    # 1) Bring up the stack
     - docker-compose up -d
-    - sleep 20
-
-    # 2) Health-check backend by running a curl container on the same network
-    - docker run --network rezimk_default --rm curlimages/curl:latest \
-        --fail http://backend:8080/actuator/health
-
-    # 3) Health-check frontend
-    - docker run --network rezimk_default --rm curlimages/curl:latest \
-        --fail http://frontend:4200
-
-    # 4) Teardown
+    - sleep 30
+    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://backend:8080/actuator/health
+    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://frontend:4200
     - docker-compose down
 
 deploy_prod:
