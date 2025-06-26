@@ -34,11 +34,19 @@ build_frontend:
 test_integration:
   stage: test
   script:
-    - apk update && apk add --no-cache curl
+    # 1) Bring up the stack
     - docker-compose up -d
     - sleep 20
-    - docker-compose exec -T backend curl --fail http://localhost:8080/actuator/health
-    - docker-compose exec -T frontend curl --fail http://localhost:4200
+
+    # 2) Health-check backend by running a curl container on the same network
+    - docker run --network rezimk_default --rm curlimages/curl:latest \
+        --fail http://backend:8080/actuator/health
+
+    # 3) Health-check frontend
+    - docker run --network rezimk_default --rm curlimages/curl:latest \
+        --fail http://frontend:80
+
+    # 4) Teardown
     - docker-compose down
 
 deploy_prod:
