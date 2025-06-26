@@ -36,8 +36,8 @@ test_integration:
   script:
     - docker-compose up -d
     - sleep 30
-    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://backend:8080/actuator/health
-    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://frontend:4200
+    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://backend:8080/api/apartments
+    - docker run --network rezimk_default --rm curlimages/curl:latest --fail http://frontend:4200/
     - docker-compose down
 
 deploy_prod:
