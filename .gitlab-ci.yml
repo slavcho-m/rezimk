@@ -44,7 +44,7 @@ test_integration:
 
     # 3) Health-check frontend
     - docker run --network rezimk_default --rm curlimages/curl:latest \
-        --fail http://frontend:80
+        --fail http://frontend:4200
 
     # 4) Teardown
     - docker-compose down
