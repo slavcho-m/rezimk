@@ -1,29 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { IApartment } from './apartments.service';
-import { IAmenity } from './amenities.service';
-import { Subject } from 'rxjs';
-
-export enum ERoomType {
-  SINGLE, DOUBLE, SUITE, STUDIO, FAMILY
-}
-
-export interface IRoom {
-  id: number,
-  roomType: ERoomType,
-  capacity: number,
-  pricePerNight: number,
-  apartment: IApartment,
-  amenities: IAmenity[],
-}
+import { Injectable, OnDestroy } from '@angular/core';
+import { interval, Subject, switchMap, takeUntil } from 'rxjs';
+import { IRoom, IRoomDto, ITown } from '../utils/project.utils';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoomsService {
+export class RoomsService implements OnDestroy{
   rooms = [] as IRoom[]
   roomsSubject = new Subject<IRoom[]>();
   roomsSubject$ = this.roomsSubject.asObservable();
+
+  private destroy$ = new Subject<void>();
 
   constructor( private http: HttpClient ) { }
 
@@ -33,6 +21,34 @@ export class RoomsService {
         this.rooms = data;
         this.roomsSubject.next(this.rooms);
       })
+  }
+
+  fetchRoomById(id: number) {
+    return this.http.get<IRoom>(`http://localhost:8080/api/rooms/${id}`);
+  }
+
+  addRoom(roomDto: IRoomDto) {
+    this.http.post<IRoom>('http://localhost:8080/api/rooms/add', roomDto)
+      .subscribe((createdRoom) => {
+        this.rooms.push(createdRoom);
+        this.roomsSubject.next([...this.rooms]);
+      });
+  }
+
+  editRoom(id: number, roomDto: IRoomDto) {
+    this.http.put<IRoom>(`http://localhost:8080/api/rooms/edit/${id}`, roomDto)
+      .subscribe((updatedRoom) => {
+        const index = this.rooms.findIndex(r => r.id === id);
+        if (index > -1) {
+          this.rooms[index] = updatedRoom;
+          this.roomsSubject.next([...this.rooms]);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
 }

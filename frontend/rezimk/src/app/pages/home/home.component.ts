@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ITown, ITownDto, TownsService } from '../../services/towns.service';
+import { TownsService } from '../../services/towns.service';
 import { Subject, takeUntil } from 'rxjs';
-import { AmenitiesService, IAmenity } from '../../services/amenities.service';
-import { ApartmentsService, IApartment } from '../../services/apartments.service';
-import { IRoom, RoomsService } from '../../services/rooms.service';
-import { IReview, ReviewsService } from '../../services/reviews.service';
+import { AmenitiesService } from '../../services/amenities.service';
+import { ApartmentsService } from '../../services/apartments.service';
+import { RoomsService } from '../../services/rooms.service';
+import { ReviewsService } from '../../services/reviews.service';
 import { CommonModule } from '@angular/common';
 import { AdvancedSearchbarComponent } from "../../components/advanced-searchbar/advanced-searchbar.component";
+import { ITown, IAmenity, IApartment, IRoom, IReview, ITownDto } from '../../utils/project.utils';
 
 @Component({
   selector: 'app-home',

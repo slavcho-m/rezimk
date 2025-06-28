@@ -1,0 +1,46 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header-row,
+.data-row {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.cell {
+  padding: 8px 12px;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.header {
+  font-weight: bold;
+  background-color: #f1f1f1;
+}
+
+.id-cell {
+  flex: 0 0 60px; /* Narrower column for ID */
+}
+
+.action-cell {
+  flex: 0 0 120px; /* Fixed width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin: 0 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+}

@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ data.id ? 'Edit' : 'Add' }} {{ data.modelType | titlecase }}</h2>
+
+<mat-dialog-content>
+  <form class="dialog-form">
+    <div *ngFor="let field of layout" class="form-field">
+      <label>{{ field | camelToTitle }}</label>
+      <input [(ngModel)]="formData[field]" [name]="field" />
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

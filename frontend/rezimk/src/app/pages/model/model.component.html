@@ -1,1 +1,14 @@
-<p>model works!</p>
+<div class="container">
+    <div class="table-container">
+        <h1>{{ modelType + ' model contents' | titlecase }}</h1>
+        <div class="btn-container">
+            <button (click)="openFormDialog('100', '100')" >Add {{ modelType | titlecase }}</button>
+        </div>
+        <app-model-table 
+            [headers]="modelLayout"
+            [rows]="modelData"
+            (delete)="openDialog('100', '100', $event)"
+            (edit)="openFormDialog('100', '100', $event)"
+        />
+    </div>
+</div>

@@ -26,7 +26,7 @@ public class Room {
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
 
-    @OneToMany
+    @ManyToMany
     private List<Amenity> amenities;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)

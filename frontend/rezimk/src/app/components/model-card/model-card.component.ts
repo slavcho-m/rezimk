@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 export enum EModelType {
-  AMENITY = "amenities",
-  APARTMENT = "apartments",
-  ROOM = "rooms",
-  REVIEW = "reviews",
-  TOWN = "towns"
+  AMENITY = "amenity",
+  APARTMENT = "apartment",
+  ROOM = "room",
+  REVIEW = "review",
+  TOWN = "town"
 }
 
 @Component({

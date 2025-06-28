@@ -1,0 +1,23 @@
+<div class="table">
+  <div class="header-row">
+    <div *ngFor="let header of headers"
+         class="cell header"
+         [ngClass]="{ 'id-cell': header === 'id' }">
+      {{ header | titlecase }}
+    </div>
+    <div class="cell header action-cell">Actions</div>
+  </div>
+
+  <div class="data-row" *ngFor="let row of rows">
+    <div *ngFor="let header of headers"
+         class="cell"
+         [ngClass]="{ 'id-cell': header === 'id' }">
+      {{ resolveValue(row[header]) }}
+    </div>
+
+    <div class="cell action-cell">
+      <button (click)="onEdit(row.id)">✏️</button>
+      <button (click)="onDelete(row.id, resolveValue(row))">🗑️</button>
+    </div>
+  </div>
+</div>

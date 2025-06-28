@@ -1,0 +1,40 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.table-container {
+    width: 80%;
+    padding-top: 32px;
+    margin: 0 auto;
+}
+
+.table-container h1 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: darkgreen;
+}
+
+.table-container .btn-container {
+    width: 100%;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: end;
+}
+
+.btn-container button {
+    background-color: transparent;
+    border: 1px solid darkgreen;
+    font-size: 16px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: darkgreen;
+    cursor: pointer;
+
+    transition: all ease-in-out 125ms;
+}
+
+.btn-container button:hover {
+    background-color: darkgreen;
+    color: lightblue;
+}
