@@ -10,5 +10,5 @@ public interface ApartmentService {
     Apartment findById(Long id);
     Apartment save(ApartmentDto apartmentDto);
     Apartment update(Long id, ApartmentDto apartmentDto);
-    Apartment deleteById(Long id);
+    void deleteById(Long id);
 }

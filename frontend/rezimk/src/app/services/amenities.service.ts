@@ -16,7 +16,7 @@ export class AmenitiesService implements OnDestroy {
   constructor( private http: HttpClient ) { }
 
   async init() {
-    await this.http.get<IAmenity[]>('http://localhost:8080/api/amenities')
+    await this.http.get<IAmenity[]>('/api/amenities')
       .subscribe(data => {
         this.amenities = data;
         this.amenitiesSubject.next(this.amenities);
@@ -24,11 +24,11 @@ export class AmenitiesService implements OnDestroy {
   }
   
   fetchAmenityById(id: number) {
-    return this.http.get(`http://localhost:8080/api/amenities/${id}`);
+    return this.http.get(`/api/amenities/${id}`);
   }
 
   addAmenity(amenityDto: IAmenityDto) {
-    this.http.post<IAmenity>('http://localhost:8080/api/amenities/add', amenityDto)
+    this.http.post<IAmenity>('/api/amenities/add', amenityDto)
       .subscribe((createdAmenity) => {
         this.amenities.push(createdAmenity);
         this.amenitiesSubject.next([...this.amenities]);
@@ -36,7 +36,7 @@ export class AmenitiesService implements OnDestroy {
   }
 
   editAmenity(id: number, amenityDto: IAmenityDto) {
-    this.http.put<IAmenity>(`http://localhost:8080/api/amenities/edit/${id}`, amenityDto)
+    this.http.put<IAmenity>(`/api/amenities/edit/${id}`, amenityDto)
       .subscribe((updatedAmenities) => {
         const index = this.amenities.findIndex(r => r.id === id);
         if (index > -1) {
@@ -44,6 +44,14 @@ export class AmenitiesService implements OnDestroy {
           this.amenitiesSubject.next([...this.amenities]);
         }
       });
+  }
+
+  deleteAmenity(id: number) {
+    this.http.delete(`/api/amenities/delete/${id}`)
+    .subscribe(() => {
+      this.amenities = this.amenities.filter(amenity => amenity.id !== id);
+      this.amenitiesSubject.next([...this.amenities]);
+    });
   }
 
   ngOnDestroy(): void {

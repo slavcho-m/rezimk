@@ -1,0 +1,27 @@
+.weather-card {
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+}
+
+.weather-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.weather-icon img {
+  width: 64px;
+  height: 64px;
+}
+
+.weather-details h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.weather-details p {
+  margin: 4px 0;
+}

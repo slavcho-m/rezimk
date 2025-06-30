@@ -1,5 +1,6 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import jakarta.transaction.Transactional;
 import mk.rezi.rezimk.dto.TownDto;
 import mk.rezi.rezimk.model.Town;
 import mk.rezi.rezimk.model.exception.TownNotFoundException;
@@ -39,11 +40,13 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
+    @Transactional
     public Town save(TownDto townDto) {
         return townRepository.save(new Town(townDto.name()));
     }
 
     @Override
+    @Transactional
     public Town update(Long id, TownDto townDto) {
         Town old = this.findById(id);
 
@@ -57,13 +60,12 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
-    public Town deleteById(Long id) {
+    @Transactional
+    public void deleteById(Long id) {
         Town town = this.findById(id);
         if (town == null) {
             throw new TownNotFoundException(id);
         }
         townRepository.delete(town);
-
-        return town;
     }
 }

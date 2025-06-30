@@ -18,7 +18,7 @@ export class ReviewsService implements OnDestroy{
   constructor( private http: HttpClient ) { }
 
   async init() {
-    await this.http.get<IReview[]>('http://localhost:8080/api/reviews')
+    await this.http.get<IReview[]>('/api/reviews')
       .subscribe(data => {
         this.reviews = data;
         this.reviewsSubject.next(this.reviews);
@@ -26,11 +26,11 @@ export class ReviewsService implements OnDestroy{
   }
 
   fetchReviewById(id: number) {
-    return this.http.get(`http://localhost:8080/api/reviews/${id}`);
+    return this.http.get(`/api/reviews/${id}`);
   }
 
   addReview(reviewDto: IReviewDto) {
-    this.http.post<IReview>('http://localhost:8080/api/reviews/add', reviewDto)
+    this.http.post<IReview>('/api/reviews/add', reviewDto)
       .subscribe((createdReview) => {
         this.reviews.push(createdReview);
         this.reviewsSubject.next([...this.reviews]);
@@ -38,7 +38,7 @@ export class ReviewsService implements OnDestroy{
   }
 
   editReview(id: number, reviewDto: IReviewDto) {
-    this.http.put<IReview>(`http://localhost:8080/api/reviews/edit/${id}`, reviewDto)
+    this.http.put<IReview>(`/api/reviews/edit/${id}`, reviewDto)
       .subscribe((updatedReview) => {
         const index = this.reviews.findIndex(r => r.id === id);
         if (index > -1) {
@@ -46,6 +46,14 @@ export class ReviewsService implements OnDestroy{
           this.reviewsSubject.next([...this.reviews]);
         }
       });
+  }
+
+  deleteReview(id: number) {
+    this.http.delete(`/api/reviews/delete/${id}`)
+    .subscribe(() => {
+      this.reviews = this.reviews.filter(review => review.id !== id);
+      this.reviewsSubject.next([...this.reviews]);
+    });
   }
   
   ngOnDestroy(): void {

@@ -1,8 +1,9 @@
-<h2 mat-dialog-title>Delete model</h2>
+<h2 mat-dialog-title>{{ 'delete model' | titlecase }}</h2>
 <mat-dialog-content>
-  Are you sure you want to delete model with name: {{ data.modelName }}?
+  <p class="delete-text">Are you sure you want to delete model with name: <b>{{ data.modelName | titlecase }}</b>?</p>
+  <span class="note">All other models strongly related to it will also be deleted.</span>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>No</button>
-  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onSubmit()" cdkFocusInitial>Yes</button>
 </mat-dialog-actions>

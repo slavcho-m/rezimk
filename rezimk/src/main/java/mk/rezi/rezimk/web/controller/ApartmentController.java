@@ -41,7 +41,8 @@ public class ApartmentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Apartment> delete(@PathVariable long id) {
-        return ResponseEntity.ok(apartmentService.deleteById(id));
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        apartmentService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

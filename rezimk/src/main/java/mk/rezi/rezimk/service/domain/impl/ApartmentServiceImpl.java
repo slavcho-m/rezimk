@@ -1,5 +1,6 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import jakarta.transaction.Transactional;
 import mk.rezi.rezimk.dto.ApartmentDto;
 import mk.rezi.rezimk.model.Apartment;
 import mk.rezi.rezimk.model.Town;
@@ -32,37 +33,33 @@ public class ApartmentServiceImpl implements ApartmentService {
     }
 
     @Override
+    @Transactional
     public Apartment save(ApartmentDto apartmentDto) {
         Town town = townService.findById(apartmentDto.townId());
         return this.apartmentRepository.save(new Apartment(apartmentDto.name(), apartmentDto.address(), apartmentDto.description(), town));
     }
 
     @Override
+    @Transactional
     public Apartment update(Long id, ApartmentDto apartmentDto) {
         Apartment old = this.findById(id);
         Town town = townService.findById(apartmentDto.townId());
 
-        if (old != null) {
-            old.setName(apartmentDto.name());
-            old.setAddress(apartmentDto.address());
-            old.setDescription(apartmentDto.description());
-            old.setTown(town);
-
-        } else {
-            throw new ApartmentNotFoundException(id);
-        }
+        old.setName(apartmentDto.name());
+        old.setAddress(apartmentDto.address());
+        old.setDescription(apartmentDto.description());
+        old.setTown(town);
 
         return this.apartmentRepository.save(old);
     }
 
     @Override
-    public Apartment deleteById(Long id) {
+    @Transactional
+    public void deleteById(Long id) {
         Apartment apartment = this.findById(id);
         if (apartment == null) {
             throw new ApartmentNotFoundException(id);
         }
         this.apartmentRepository.delete(apartment);
-
-        return apartment;
     }
 }

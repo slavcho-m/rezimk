@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +20,7 @@ public class Room {
 
     private int capacity;
     private BigDecimal pricePerNight;
+    private boolean isReserved;
 
     @ManyToOne
     @JoinColumn(name = "apartment_id")
@@ -40,6 +40,7 @@ public class Room {
         this.pricePerNight = pricePerNight;
         this.apartment = apartment;
         this.amenities = new ArrayList<>();
+        this.isReserved = false;
     }
 
     public void addImage(Image image) {
@@ -60,6 +61,14 @@ public class Room {
 
     public void removeAmenity(Amenity amenity) {
         this.amenities.remove(amenity);
+    }
+
+    public void reserveRoom() {
+        this.isReserved = true;
+    }
+
+    public void freeRoom() {
+        this.isReserved = false;
     }
 
     // Getters and setters
@@ -118,5 +127,9 @@ public class Room {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public boolean isReserved() {
+        return isReserved;
     }
 }

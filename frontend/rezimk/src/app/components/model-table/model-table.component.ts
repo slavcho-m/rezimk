@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CamelToTitlePipe } from '../../utils/camel-to-title.pipe';
 
 @Component({
   selector: 'app-model-table',
-  imports: [CommonModule],
+  imports: [CommonModule, CamelToTitlePipe],
   templateUrl: './model-table.component.html',
   styleUrl: './model-table.component.css'
 })
@@ -15,12 +16,10 @@ export class ModelTableComponent {
   @Output() delete = new EventEmitter<any>();
 
   onEdit(id: number) {
-    console.log(id);
     this.edit.emit(id);
   }
 
   onDelete(id: number, name: string) {
-    console.log(name);
     this.delete.emit({id: id, name: name});
   }
 

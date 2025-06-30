@@ -1,0 +1,94 @@
+.apartment-detail {
+  padding: 24px;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.apartment-header {
+  display: flex;
+  gap: 24px;
+}
+
+.apartment-img {
+  height: 300px;
+  width: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.apartment-info p {
+  margin: 4px 0;
+}
+
+.rooms-table {
+  margin-top: 32px;
+}
+
+.room-header, .room-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.room-header {
+  font-weight: bold;
+}
+
+.room-row {
+  border-top: 1px solid #ccc;
+}
+
+.room-row.reserved {
+  background-color: #f0f0f0;
+}
+
+.amenities-list {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-top: 4px;
+}
+
+.reviews-section {
+    margin-top: 24px;
+}
+
+.add-review {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: start;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* Smaller input and select fields */
+.small-input {
+  max-width: 300px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.small-select {
+  max-width: 104px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.review-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.review-card {
+  flex: 0 0 calc(50% - 4px);
+  box-sizing: border-box;
+  padding: 12px;
+  background: #f7f7f7;
+  border-radius: 8px;
+}

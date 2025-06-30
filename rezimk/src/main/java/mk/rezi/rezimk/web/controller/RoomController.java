@@ -44,8 +44,21 @@ public class RoomController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/reserve/{id}")
+    public ResponseEntity<Void> reserve(@PathVariable Long id) {
+        roomService.reserveRoom(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/free/{id}")
+    public ResponseEntity<Void> free(@PathVariable Long id) {
+        roomService.freeRoom(id);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Room> delete(@PathVariable Long id) {
-        return ResponseEntity.ok(roomService.deleteById(id));
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        roomService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

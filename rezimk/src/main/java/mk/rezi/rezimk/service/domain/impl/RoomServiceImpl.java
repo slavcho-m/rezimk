@@ -1,5 +1,6 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import jakarta.transaction.Transactional;
 import mk.rezi.rezimk.dto.RoomDto;
 import mk.rezi.rezimk.model.Amenity;
 import mk.rezi.rezimk.model.Apartment;
@@ -37,6 +38,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional
     public Room save(RoomDto roomDto) {
         Apartment apartment = apartmentService.findById(roomDto.apartmentId());
         return this.roomRepository.save(
@@ -50,6 +52,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional
     public Room update(Long id, RoomDto roomDto) {
         Room old = this.findById(id);
         Apartment apartment = apartmentService.findById(id);
@@ -70,26 +73,46 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room deleteById(Long id) {
+    @Transactional
+    public void deleteById(Long id) {
         Room room = this.findById(id);
         if (room == null) {
             throw new RoomNotFoundException(id);
         }
         this.roomRepository.delete(room);
-        return room;
     }
 
     @Override
+    @Transactional
     public void addAmenities(Long roomId, List<Long> amenityIds) {
         Room room = this.findById(roomId);
         List<Amenity> amenities = new ArrayList<>();
 
         for (Long amenityId : amenityIds) {
             Amenity amenity = this.amenityService.findById(amenityId);
-            amenities.add(amenity);
+
+            if (!room.getAmenities().contains(amenity)) {
+                room.getAmenities().add(amenity);
+            }
         }
 
         room.addAmenities(amenities);
+        roomRepository.save(room);
+    }
+
+    @Override
+    @Transactional
+    public void reserveRoom(Long id) {
+        Room room = this.findById(id);
+        room.reserveRoom();
+        roomRepository.save(room);
+    }
+
+    @Override
+    @Transactional
+    public void freeRoom(Long id) {
+        Room room = this.findById(id);
+        room.freeRoom();
         roomRepository.save(room);
     }
 }

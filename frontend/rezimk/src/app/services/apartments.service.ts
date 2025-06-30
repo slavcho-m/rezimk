@@ -11,12 +11,14 @@ export class ApartmentsService implements OnDestroy {
   apartmentsSubject = new Subject<IApartment[]>();
   apartmentsSubject$ = this.apartmentsSubject.asObservable();
 
+  apartmentImages = {} as Record<number, string>;
+
   private destroy$ = new Subject<void>();
 
   constructor( private http: HttpClient ) { }
 
   async init() {
-    await this.http.get<IApartment[]>('http://localhost:8080/api/apartments')
+    await this.http.get<IApartment[]>('/api/apartments')
       .subscribe(data => {
         this.apartments = data;
         this.apartmentsSubject.next(this.apartments);
@@ -24,11 +26,11 @@ export class ApartmentsService implements OnDestroy {
   }
 
   fetchApartmentById(id: number) {
-    return this.http.get(`http://localhost:8080/api/apartments/${id}`);
+    return this.http.get<IApartment>(`/api/apartments/${id}`);
   }
 
   addApartment(apartmentDto: IApartmentDto) {
-    this.http.post<IApartment>('http://localhost:8080/api/apartments/add', apartmentDto)
+    this.http.post<IApartment>('/api/apartments/add', apartmentDto)
       .subscribe((createdApartment) => {
         this.apartments.push(createdApartment);
         this.apartmentsSubject.next([...this.apartments]);
@@ -36,7 +38,7 @@ export class ApartmentsService implements OnDestroy {
   }
 
   editApartment(id: number, apartmentDto: IApartmentDto) {
-    this.http.put<IApartment>(`http://localhost:8080/api/apartments/edit/${id}`, apartmentDto)
+    this.http.put<IApartment>(`/api/apartments/edit/${id}`, apartmentDto)
       .subscribe((updatedApartment) => {
         const index = this.apartments.findIndex(r => r.id === id);
         if (index > -1) {
@@ -44,6 +46,14 @@ export class ApartmentsService implements OnDestroy {
           this.apartmentsSubject.next([...this.apartments]);
         }
       });
+  }
+
+  deleteApartment(id: number) {
+    this.http.delete(`/api/apartments/delete/${id}`)
+    .subscribe(() => {
+      this.apartments = this.apartments.filter(apartment => apartment.id !== id);
+      this.apartmentsSubject.next([...this.apartments]);
+    });
   }
 
   ngOnDestroy(): void {

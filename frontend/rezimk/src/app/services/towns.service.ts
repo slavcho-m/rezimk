@@ -16,7 +16,7 @@ export class TownsService implements OnDestroy {
   constructor( private http: HttpClient ) { }
 
   async init() {
-    await this.http.get<ITown[]>('http://localhost:8080/api/towns')
+    await this.http.get<ITown[]>('/api/towns')
       .subscribe(data => {
         this.towns = data;
         this.townsSubject.next(this.towns);
@@ -24,7 +24,7 @@ export class TownsService implements OnDestroy {
   }
 
   addTown(townDto: ITownDto) {
-    this.http.post<ITown>('http://localhost:8080/api/towns/add', townDto)
+    this.http.post<ITown>('/api/towns/add', townDto)
       .subscribe((createdTown) => {
         this.towns.push(createdTown);
         this.townsSubject.next([...this.towns]);
@@ -32,7 +32,7 @@ export class TownsService implements OnDestroy {
   }
 
   editTown(id: number, townDto: ITownDto) {
-    this.http.put<ITown>(`http://localhost:8080/api/towns/edit/${id}`, townDto)
+    this.http.put<ITown>(`/api/towns/edit/${id}`, townDto)
       .subscribe((updatedTown) => {
         const index = this.towns.findIndex(r => r.id === id);
         if (index > -1) {
@@ -42,8 +42,16 @@ export class TownsService implements OnDestroy {
       });
   }
 
+  deleteTown(id: number) {
+    this.http.delete(`/api/towns/delete/${id}`)
+    .subscribe(() => {
+      this.towns = this.towns.filter(town => town.id !== id);
+      this.townsSubject.next([...this.towns]);
+    });
+  }
+
   fetchTownById(id: number) {
-    return this.http.get(`http://localhost:8080/api/towns/${id}`);
+    return this.http.get(`/api/towns/${id}`);
   }
 
   ngOnDestroy(): void {

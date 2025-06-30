@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
 public class Town {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +14,9 @@ public class Town {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "town", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apartment> apartments = new ArrayList<>();
 
     public Town() {}
 

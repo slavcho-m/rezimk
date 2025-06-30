@@ -11,5 +11,5 @@ public interface TownService {
     Town findByName(String name);
     Town save(TownDto townDto);
     Town update(Long id, TownDto townDto);
-    Town deleteById(Long id);
+    void deleteById(Long id);
 }

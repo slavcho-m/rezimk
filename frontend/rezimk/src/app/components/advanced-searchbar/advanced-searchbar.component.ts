@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,8 +9,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './advanced-searchbar.component.css'
 })
 export class AdvancedSearchbarComponent {
+  @Output() searchValue = new EventEmitter<string>();
+
   inputValue = '';
   onInputChange() {
-    console.log(this.inputValue);
+    this.searchValue.emit(this.inputValue);
   }
 }

@@ -7,5 +7,83 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 32px;
+    margin-bottom: 32px;
+}
+
+.apartment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+}
+
+.apartment-card {
+  display: flex;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  cursor: pointer;
+
+  transition: all ease-in 125ms;
+}
+
+.apartment-card:hover {
+    box-shadow: 0 2px 15px rgba(173, 216, 230, 1);
+    transform: scale(1.015);
+}
+
+.image-container {
+  flex: 1 1 300px;
+  max-width: 300px;
+  height: 250px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info-container {
+  flex: 2;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.location {
+  font-size: 14px;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.apartment-name {
+  margin: 8px 0 4px 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.address {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.rating-price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.rating, .price {
+  font-weight: 500;
+  font-size: 16px;
 }

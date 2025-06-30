@@ -100,11 +100,13 @@ export class ModelComponent implements OnInit {
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string, value: any): void {
     this.dialog.open(DialogComponent, {
-      width: '250px',
+      width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: {
         modelName: value.name,
+        modelType: this.modelType,
+        id: value.id
       }
     });
   }

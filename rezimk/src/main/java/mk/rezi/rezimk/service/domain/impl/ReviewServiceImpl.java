@@ -1,5 +1,6 @@
 package mk.rezi.rezimk.service.domain.impl;
 
+import jakarta.transaction.Transactional;
 import mk.rezi.rezimk.dto.ReviewDto;
 import mk.rezi.rezimk.model.Apartment;
 import mk.rezi.rezimk.model.Review;
@@ -32,19 +33,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public Review save(ReviewDto reviewDto) {
         Apartment apartment = this.apartmentService.findById(reviewDto.apartmentId());
         return reviewRepository.save(new Review(reviewDto.rating(), reviewDto.comment(), apartment));
     }
 
     @Override
+    @Transactional
     public Review update(Long id, ReviewDto reviewDto) {
         Review oldReview = this.findById(id);
         Apartment apartment = this.apartmentService.findById(reviewDto.apartmentId());
-
-        if (oldReview == null) {
-            throw new ReviewNotFoundException(id);
-        }
 
         oldReview.setComment(reviewDto.comment());
         oldReview.setRating(reviewDto.rating());
@@ -54,12 +53,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review deleteById(Long id) {
+    @Transactional
+    public void deleteById(Long id) {
         Review review = this.findById(id);
         if (review == null) {
             throw new ReviewNotFoundException(id);
         }
         reviewRepository.delete(review);
-        return review;
     }
 }

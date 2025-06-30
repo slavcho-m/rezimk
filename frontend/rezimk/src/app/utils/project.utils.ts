@@ -19,6 +19,7 @@ export interface IRoom {
   pricePerNight: number,
   apartment: IApartment,
   amenities: IAmenity[],
+  reserved: boolean,
 }
 
 export enum ERating {
@@ -44,7 +45,7 @@ export const ModelLayouts = {
   town: ['id', 'name'] as (keyof ITown)[],
   apartment: ['id', 'address', 'description', 'name', 'town'] as (keyof IApartment)[],
   review: ['id', 'rating', 'comment', 'apartment'] as (keyof IReview)[],
-  room: ['id', 'roomType', 'capacity', 'amenities', 'pricePerNight', 'apartment'] as (keyof IRoom)[],
+  room: ['id', 'roomType', 'capacity', 'amenities', 'pricePerNight', 'reserved', 'apartment'] as (keyof IRoom)[],
   amenity: ['id', 'name'] as (keyof IAmenity)[]
 };
 

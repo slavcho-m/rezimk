@@ -16,7 +16,7 @@ export class RoomsService implements OnDestroy{
   constructor( private http: HttpClient ) { }
 
   async init() {
-    await this.http.get<IRoom[]>('http://localhost:8080/api/rooms')
+    await this.http.get<IRoom[]>('/api/rooms')
       .subscribe(data => {
         this.rooms = data;
         this.roomsSubject.next(this.rooms);
@@ -24,11 +24,11 @@ export class RoomsService implements OnDestroy{
   }
 
   fetchRoomById(id: number) {
-    return this.http.get<IRoom>(`http://localhost:8080/api/rooms/${id}`);
+    return this.http.get<IRoom>(`/api/rooms/${id}`);
   }
 
   addRoom(roomDto: IRoomDto) {
-    this.http.post<IRoom>('http://localhost:8080/api/rooms/add', roomDto)
+    this.http.post<IRoom>('/api/rooms/add', roomDto)
       .subscribe((createdRoom) => {
         this.rooms.push(createdRoom);
         this.roomsSubject.next([...this.rooms]);
@@ -36,7 +36,7 @@ export class RoomsService implements OnDestroy{
   }
 
   editRoom(id: number, roomDto: IRoomDto) {
-    this.http.put<IRoom>(`http://localhost:8080/api/rooms/edit/${id}`, roomDto)
+    this.http.put<IRoom>(`/api/rooms/edit/${id}`, roomDto)
       .subscribe((updatedRoom) => {
         const index = this.rooms.findIndex(r => r.id === id);
         if (index > -1) {
@@ -44,6 +44,35 @@ export class RoomsService implements OnDestroy{
           this.roomsSubject.next([...this.rooms]);
         }
       });
+  }
+
+  addAmenities(id: number, amenityIds: number[]) {
+    this.http.put(`/api/rooms/edit/${id}/amenities`, amenityIds)
+      .subscribe(() => {
+        this.init();
+      });
+  }
+
+  reserveRoom(id: number) {
+    this.http.put(`/api/rooms/reserve/${id}`, null)
+      .subscribe(() => {
+        this.init();
+      })
+  }
+
+  freeRoom(id: number) {
+    this.http.put(`/api/rooms/free/${id}`, null)
+      .subscribe(() => {
+        this.init();
+      })
+  }
+
+  deleteRoom(id: number) {
+    this.http.delete(`/api/rooms/delete/${id}`)
+    .subscribe(() => {
+      this.rooms = this.rooms.filter(room => room.id !== id);
+      this.roomsSubject.next([...this.rooms]);
+    });
   }
 
   ngOnDestroy(): void {

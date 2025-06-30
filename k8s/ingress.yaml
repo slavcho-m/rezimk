@@ -10,6 +10,13 @@ spec:
   rules:
   - http:
       paths:
+      - path: /swagger-ui(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8080
       - path: /api(/|$)(.*)
         pathType: ImplementationSpecific
         backend:

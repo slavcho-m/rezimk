@@ -1,1 +1,68 @@
-<p>apartment works!</p>
+<div class="apartment-detail">
+  <div class="apartment-header">
+    <img [src]="apartmentImage" alt="Apartment" class="apartment-img" />
+
+    <div class="apartment-info">
+      <h2>{{ apartment?.name }}</h2>
+      <p>📍 {{ apartment?.town?.name }}</p>
+      <p>{{ apartment?.address }}</p>
+      <p>{{ apartment?.description }}</p>
+    </div>
+  </div>
+
+  <div class="rooms-table">
+    <div class="room-header">
+      <div>Room Type</div>
+      <div>Capacity</div>
+      <div>Price per night</div>
+      <div>Amenities</div>
+      <div>Status</div>
+    </div>
+
+    <div *ngFor="let room of rooms" class="room-row">
+      <div>{{ room.roomType }}</div>
+      <div>{{ room.capacity }}</div>
+      <div>{{ room.pricePerNight }}$/night</div>
+      <div>
+        <button mat-button (click)="openAmenitySelector(room)">+ Add Amenities</button>
+        <div class="amenities-list">
+          {{ getAmenityNames(room) }}
+        </div>
+      </div>
+      <div>
+        <button (click)="handleRoomReservation(room.reserved, room.id)" mat-stroked-button>{{ room.reserved ? 'RESERVED' : 'FREE' }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews-section">
+    <h3>Reviews</h3>
+
+    <div class="add-review mat-elevation-z2">
+        <mat-form-field appearance="outline" class="review-select small-select">
+            <mat-label>Rating</mat-label>
+            <mat-select [(ngModel)]="selectedRating">
+                <mat-option *ngFor="let r of [1,2,3,4,5]" [value]="r">
+                    {{ r }} Star{{ r > 1 ? 's' : '' }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="review-comment small-input">
+            <mat-label>Write a comment...</mat-label>
+            <input matInput [(ngModel)]="comment" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onAddReview()">
+            Add Review
+        </button>
+    </div>
+
+    <div class="review-list">
+      <div *ngFor="let review of reviews" class="review-card">
+        <div>⭐ {{ getRatingNumber(review.rating) }}</div>
+        <div>{{ review.comment }}</div>
+      </div>
+    </div>
+  </div>
+</div>

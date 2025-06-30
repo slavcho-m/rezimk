@@ -1,5 +1,38 @@
 <div class="container">
+    <div class="weather-card-container">
+        <app-weather-card></app-weather-card>
+    </div>
     <div class="search-container">
-        <app-advanced-searchbar></app-advanced-searchbar>
+        <app-advanced-searchbar (searchValue)="onInput($event)"></app-advanced-searchbar>
+    </div>
+    <div class="apartment-list">
+        <div class="apartment-card" (click)="navigateToApartment(apartment.id)" *ngFor="let apartment of apartmentsCpy">
+            <!-- Left: Image -->
+            <div class="image-container">
+                <img class="apartment-image" [src]="apartmentImages[apartment.id]" alt="Apartment" />
+            </div>
+
+            <!-- Right: Content -->
+            <div class="info-container">
+            <div class="location">
+                <span class="icon">📍</span>
+                {{ apartment.town.name }}
+            </div>
+            <h2 class="apartment-name">{{ apartment.name }}</h2>
+            <p class="address">{{ apartment.address }}</p>
+
+            <!-- Rating -->
+            <div class="rating-price-container">
+                <div class="rating">
+                ⭐ {{ getAverageRating(apartment.id) | number: '1.1-1' }} / 5
+                </div>
+
+                <!-- Lowest price -->
+                <div class="price">
+                {{ getLowestPrice(apartment.id) }}€ / night
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>

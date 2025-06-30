@@ -3,7 +3,7 @@
     <div *ngFor="let header of headers"
          class="cell header"
          [ngClass]="{ 'id-cell': header === 'id' }">
-      {{ header | titlecase }}
+      {{ header | camelToTitle }}
     </div>
     <div class="cell header action-cell">Actions</div>
   </div>

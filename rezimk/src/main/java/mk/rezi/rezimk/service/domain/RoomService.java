@@ -10,6 +10,8 @@ public interface RoomService {
     Room findById(Long id);
     Room save(RoomDto roomDto);
     Room update(Long id, RoomDto roomDto);
-    Room deleteById(Long id);
+    void deleteById(Long id);
     void addAmenities(Long roomId, List<Long> amenityIds);
+    void reserveRoom(Long id);
+    void freeRoom(Long id);
 }

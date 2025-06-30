@@ -5,7 +5,6 @@ import lombok.Data;
 import mk.rezi.rezimk.model.enums.Rating;
 
 @Entity
-@Data
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

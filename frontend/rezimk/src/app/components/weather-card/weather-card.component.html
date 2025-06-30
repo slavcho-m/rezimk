@@ -1,0 +1,15 @@
+<mat-card *ngIf="weather" class="weather-card">
+  <div class="weather-content">
+    <div class="weather-icon">
+      <img [src]="'https:' + weather.condition.icon" alt="weather icon">
+    </div>
+
+    <div class="weather-details">
+      <h2>{{ weather.name }}, {{ weather.country }}</h2>
+      <p><strong>Last updated:</strong> {{ weather.last_updated | date }}</p>
+      <p><strong>Temperature:</strong> {{ weather.temp_c }}°C</p>
+      <p><strong>Condition:</strong> {{ weather.condition.text }}</p>
+      <p><strong>Humidity:</strong> {{ weather.humidity }}%</p>
+    </div>
+  </div>
+</mat-card>

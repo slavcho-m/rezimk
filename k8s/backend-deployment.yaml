@@ -20,7 +20,10 @@ spec:
         - containerPort: 8080
         env:
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:postgresql://postgres:5432/rezi_mk
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: db
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:
@@ -31,4 +34,3 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
-

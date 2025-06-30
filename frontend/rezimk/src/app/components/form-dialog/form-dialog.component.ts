@@ -33,7 +33,6 @@ export class FormDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.layout = ModelDtoLayouts[this.data.modelType];
-    console.log('r ' + this.layout);
 
     if (this.data.id !== undefined) {
       this.fetchItemById(this.data.modelType, this.data.id);
